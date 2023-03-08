@@ -1,8 +1,8 @@
-package com.parse;
+package com.parsing.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.parse.model.XmlUserDto;
-import com.parse.repository.FileRepository;
+import com.parsing.model.XmlUser;
+import com.parsing.repository.FileRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -18,13 +18,12 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 
-import static com.parse.TestUtils.FILE_ROOT_TEST_URI;
-import static com.parse.TestUtils.UPLOADED_FILE_URI;
-import static com.parse.repository.FileRepository.UPLOAD_DIRECTORY_PATH;
+import static com.parsing.TestUtils.FILE_ROOT_TEST_URI;
+import static com.parsing.TestUtils.UPLOADED_FILE_URI;
+import static com.parsing.repository.FileRepository.UPLOAD_DIRECTORY_PATH;
 import static java.nio.file.Files.*;
 import static java.util.Arrays.asList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -75,6 +74,7 @@ class UploadFileAppIntegrationTest {
                 .andReturn();
 
         //then
+        assertFalse(exists(filePath));
         assertThrows(NoSuchFileException.class, () -> fileRepository.deleteFile(fileName));
     }
 
@@ -99,11 +99,12 @@ class UploadFileAppIntegrationTest {
 
         // then
         final var response = asList(objectMapper.readValue(mvcResult.getResponse()
-                .getContentAsByteArray(), XmlUserDto[].class));
+                .getContentAsByteArray(), XmlUser[].class));
 
         assertEquals("Kalle Anka", response.get(0).getName());
         assertEquals("scrooge@email.dt", response.get(1).getEmail());
         assertEquals("arneanka", response.get(2).getUserName());
+        assertTrue(exists(filePath));
         assertThrows(FileAlreadyExistsException.class, () -> fileRepository.uploadFile(multipartFile));
         deleteIfExists(filePath);
     }

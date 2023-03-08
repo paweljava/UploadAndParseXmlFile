@@ -1,4 +1,4 @@
-package com.parse.exception;
+package com.parsing.exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.parse.model;
+package com.parsing.model;
 
 import jakarta.xml.bind.annotation.XmlElement;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class XmlUserDto {
+public class XmlUser {
 
     @XmlElement(name = "name")
     private String name;

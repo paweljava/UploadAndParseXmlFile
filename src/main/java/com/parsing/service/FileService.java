@@ -1,10 +1,10 @@
-package com.parse.service;
+package com.parsing.service;
 
-import com.parse.exception.ParseAccessTemporaryFileException;
-import com.parse.exception.ParseFileParseException;
-import com.parse.model.XmlRoot;
-import com.parse.model.XmlUserDto;
-import com.parse.repository.FileRepository;
+import com.parsing.exception.ParseAccessTemporaryFileException;
+import com.parsing.exception.ParseFileParseException;
+import com.parsing.model.XmlRoot;
+import com.parsing.model.XmlUser;
+import com.parsing.repository.FileRepository;
 import jakarta.xml.bind.JAXBException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,7 +31,7 @@ public class FileService {
         fileRepository.deleteFile(file);
     }
 
-    public List<XmlUserDto> parseXmlListToJavaList(MultipartFile file)
+    public List<XmlUser> parseXml(MultipartFile file)
             throws Exception {
 
         try {

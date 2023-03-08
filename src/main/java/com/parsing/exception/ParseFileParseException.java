@@ -1,4 +1,4 @@
-package com.parse.exception;
+package com.parsing.exception;
 
 import jakarta.xml.bind.JAXBException;
 import org.slf4j.Logger;
