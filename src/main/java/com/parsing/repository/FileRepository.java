@@ -1,6 +1,6 @@
-package com.parse.repository;
+package com.parsing.repository;
 
-import com.parse.exception.*;
+import com.parsing.exception.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 

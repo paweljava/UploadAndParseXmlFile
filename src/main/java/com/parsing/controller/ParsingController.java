@@ -1,8 +1,8 @@
-package com.parse.controller;
+package com.parsing.controller;
 
-import com.parse.exception.ParseFileExtensionException;
-import com.parse.model.XmlUserDto;
-import com.parse.service.FileService;
+import com.parsing.exception.ParseFileExtensionException;
+import com.parsing.model.XmlUser;
+import com.parsing.service.FileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,24 +19,27 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 @Slf4j
 @RestController
 public
-class DataController {
+class ParsingController {
 
     private final FileService fileService;
 
-    DataController(FileService fileService) {
+    private ParsingController(FileService fileService) {
         this.fileService = fileService;
     }
 
     @PostMapping(value = "/{file}")
-    public ResponseEntity<List<XmlUserDto>> uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
+    public ResponseEntity<List<XmlUser>> uploadFile(@RequestParam("file") MultipartFile file) throws Exception {
 
-        final Optional<String> fileName = Optional.ofNullable(file.getOriginalFilename());
-        fileName.filter(name -> name.endsWith(".xml")).orElseThrow(ParseFileExtensionException::new);
-
-        final var list = fileService.parseXmlListToJavaList(file);
+        validateFileName(file);
+        final var list = fileService.parseXml(file);
         fileService.uploadFile(file);
 
         return new ResponseEntity<>(list, HttpStatus.CREATED);
+    }
+
+    private static void validateFileName(MultipartFile file) throws ParseFileExtensionException {
+        final Optional<String> fileName = Optional.ofNullable(file.getOriginalFilename());
+        fileName.filter(name -> name.endsWith(".xml")).orElseThrow(ParseFileExtensionException::new);
     }
 
     @DeleteMapping("delete/{file}")

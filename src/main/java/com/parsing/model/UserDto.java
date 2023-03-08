@@ -1,11 +1,11 @@
-package com.parse.model;
+package com.parsing.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-class XmlUser {
+class UserDto {
 
     private final String name;
     private final String email;

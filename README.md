@@ -14,6 +14,8 @@ An example app to parse xml files using HTTP REST multipart requests.
 
 - Create a program to parse Xml file
 - Add spring framework and create endpoint for xml parsing.
+- Uploaded files are saved in /src/main/resources/upload/
+- Logs are saved in /src/main/resources/log/
 - Request:
   POST /file
   MULTIPART request with an xml file
@@ -30,11 +32,17 @@ An example app to parse xml files using HTTP REST multipart requests.
 ]
 ```
 
+- Logging errors to file or on console can be changed in "application.properties" file.
+Configuration options:
+
+  - *spring.profiles.active=prod* - to logging to file
+  - *spring.profiles.active=dev* - to logging on console
+
 ## Requirements:
 
-- Spring Boot
-- Java 8 or higher
-- Gradle
+- Spring Boot 2.7.5
+- Java 17
+- Gradle 7.5.1
 
 ## Run
 
@@ -72,6 +80,11 @@ Parameters to upload file:
 - key: file
 - value: -- xml file to upload, example file: [user.xml](src/main/resources/file/users.xml)
 
+Or command line request:
+```
+curl --location localhost:8080/file --form file=@"/<path to your xml file.xml>"
+```
+
 ### Xml file structure
 
 ```
@@ -99,16 +112,3 @@ Parameters to upload file:
   ...
 ]
 ```
-
-## Properties configuration
-
-Logging errors to file or on console can be changed in properties.
-Configuration options:
-
-- **spring.profiles.active=prod** - to logging to file
-- **spring.profiles.active=dev** - to logging on console
-
-## Details
-
-- uploaded files are saved in /src/main/resources/upload/
-- logs are saved in /src/main/resources/log/

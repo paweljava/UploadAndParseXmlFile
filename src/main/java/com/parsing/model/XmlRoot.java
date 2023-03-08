@@ -1,4 +1,4 @@
-package com.parse.model;
+package com.parsing.model;
 
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
@@ -12,5 +12,5 @@ import java.util.List;
 public class XmlRoot {
 
     @XmlElement(name = "user")
-    private final List<XmlUserDto> users = new ArrayList<>();
+    private final List<XmlUser> users = new ArrayList<>();
 }
